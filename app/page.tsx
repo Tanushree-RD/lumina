@@ -1,21 +1,25 @@
-import { Button } from "@/components/ui/button";
+import { Navbar } from "@/components/navbar";
+import { Hero } from "@/components/hero";
+import { LightCurveUpload } from "@/components/light-curve-upload";
+import { DetectionPipeline } from "@/components/detection-pipeline";
+import { DashboardPreview } from "@/components/dashboard-preview";
+import { ExplainableAI } from "@/components/explainable-ai";
+import { CandidateRanking } from "@/components/candidate-ranking";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-      <main className="flex max-w-2xl flex-col items-center gap-8">
-        <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-6xl">
-          Lumina
-        </h1>
-
-        <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
-          Explainable AI for Trustworthy Exoplanet Discovery
-        </p>
-
-        <Button size="lg" className="mt-4">
-          Launch Dashboard
-        </Button>
+    <>
+      <Navbar />
+      <main className="flex flex-col">
+        <Hero />
+        <LightCurveUpload />
+        <DetectionPipeline />
+        <DashboardPreview />
+        <ExplainableAI />
+        <CandidateRanking />
       </main>
-    </div>
+      <Footer />
+    </>
   );
 }
