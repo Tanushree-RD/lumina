@@ -15,13 +15,16 @@ export const metadata: Metadata = {
     "Explainable AI platform for trustworthy exoplanet detection using astronomical light curves.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+import { Toaster } from "sonner";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
       <body className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Toaster position="bottom-right" richColors />
       </body>
     </html>
   );
