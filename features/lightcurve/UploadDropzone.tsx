@@ -11,7 +11,9 @@ interface UploadDropzoneProps {
   onDataLoaded: (
     points: LightCurvePoint[],
     telemetry: LightCurveTelemetry,
-    filename: string
+    filename: string,
+    rawFlux?: number[],
+    times?: number[] | null
   ) => void;
 }
 
@@ -38,11 +40,18 @@ export function UploadDropzone({ onDataLoaded }: UploadDropzoneProps) {
             dataPointsCount: result.points.length,
             snr: result.snr,
             durationHours: Number((result.inferredPeriodDays * 0.08 * 24).toFixed(2)),
-            symmetryPercent: 97.4,
+            symmetryPercent: result.symmetryPercent,
             estimatedRadiusEarth: result.estimatedRadius,
+            noiseLevelPpt: result.noiseLevelPpt,
           };
 
-          onDataLoaded(result.points, telemetry, file.name.replace(/\.[^/.]+$/, ""));
+          onDataLoaded(
+            result.points,
+            telemetry,
+            file.name.replace(/\.[^/.]+$/, ""),
+            result.rawFlux,
+            result.times
+          );
           setIsParsing(false);
           toast.success(`Parsed ${result.points.length.toLocaleString()} observations from ${file.name}`);
         }, 800);
@@ -87,10 +96,11 @@ export function UploadDropzone({ onDataLoaded }: UploadDropzoneProps) {
         dataPointsCount: result.points.length,
         snr: result.snr,
         durationHours: 2.7,
-        symmetryPercent: 98.0,
+        symmetryPercent: result.symmetryPercent,
         estimatedRadiusEarth: result.estimatedRadius,
+        noiseLevelPpt: result.noiseLevelPpt,
       };
-      onDataLoaded(result.points, telemetry, "Synthetic-Target-Exo");
+      onDataLoaded(result.points, telemetry, "Synthetic-Target-Exo", result.rawFlux, result.times);
       setUploadedFileName("Synthetic-Target-Exo.csv");
       setIsParsing(false);
       toast.success("Generated realistic synthetic Kepler-cadence transit data");

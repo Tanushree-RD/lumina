@@ -30,7 +30,7 @@ function AnimatedNumber({
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
-    let start = 0;
+    const start = 0;
     const duration = 750; // ms
     const startTime = performance.now();
 

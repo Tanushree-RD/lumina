@@ -19,6 +19,7 @@ import {
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { SpectrumPoint } from "@/types";
+import { parseSpectrumCSV } from "@/lib/astronomy/csv-parsers";
 
 export function SpectrumAnalyzer() {
   const router = useRouter();
@@ -54,31 +55,17 @@ export function SpectrumAnalyzer() {
     reader.onload = (event) => {
       try {
         const text = event.target?.result as string;
-        const lines = text.trim().split("\n");
-        const points: SpectrumPoint[] = [];
+        const parsed = parseSpectrumCSV(text);
+        const points: SpectrumPoint[] = parsed.wls.map((wl, i) => ({
+          wavelength: Number(wl.toFixed(3)),
+          depth: Number(parsed.depth[i].toFixed(4)),
+        }));
 
-        for (const line of lines) {
-          if (!line || line.startsWith("#") || line.toLowerCase().includes("wave"))
-            continue;
-          const parts = line.split(/[,\s\t]+/);
-          if (parts.length >= 2) {
-            const wl = parseFloat(parts[0]);
-            const depth = parseFloat(parts[1]);
-            if (!isNaN(wl) && !isNaN(depth)) {
-              points.push({ wavelength: wl, depth });
-            }
-          }
-        }
-
-        if (points.length < 10) {
-          toast.error("Insufficient data points in wavelength CSV.");
-          return;
-        }
-
-        setCustomSpectrum(points);
-        toast.success(`Loaded ${points.length} spectral bands from ${file.name}`);
-      } catch (err) {
-        toast.error("Error parsing wavelength CSV.");
+        setCustomSpectrum(points, parsed.wls, parsed.depth);
+        toast.success(`Loaded and retrieved ${points.length} spectral bands from ${file.name}`);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : "Error parsing wavelength CSV.";
+        toast.error(msg);
       }
     };
     reader.readAsText(file);

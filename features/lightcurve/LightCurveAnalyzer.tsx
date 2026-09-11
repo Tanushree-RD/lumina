@@ -60,8 +60,8 @@ export function LightCurveAnalyzer() {
 
       {/* Drag & Drop Custom Uploader */}
       <UploadDropzone
-        onDataLoaded={(points, metrics, name) => {
-          setCustomLightCurve(points, metrics, name);
+        onDataLoaded={(points, metrics, name, rawFlux, times) => {
+          setCustomLightCurve(points, metrics, name, rawFlux, times);
         }}
       />
 

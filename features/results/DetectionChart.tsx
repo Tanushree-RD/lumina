@@ -41,7 +41,7 @@ export function DetectionChart({
       .filter((_, idx) => idx % stride === 0)
       .map((p) => {
         const phaseRaw = ((p.time % periodDays) / periodDays);
-        let phase = phaseRaw > 0.5 ? phaseRaw - 1.0 : phaseRaw;
+        const phase = phaseRaw > 0.5 ? phaseRaw - 1.0 : phaseRaw;
 
         // Mandel-Agol quadratic model approximation
         let modelFlux = 1.0;

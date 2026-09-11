@@ -5,6 +5,7 @@ import {
   ResponsiveContainer,
   AreaChart,
   Area,
+  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -187,6 +188,18 @@ export function RechartsSpectrum({
               fill="url(#spectrumGradient)"
               isAnimationActive={true}
               animationDuration={900}
+              name="Observed Spectrum"
+            />
+            <Line
+              type="monotone"
+              dataKey="modelDepth"
+              stroke="#0d9488"
+              strokeWidth={2}
+              strokeDasharray="4 2"
+              dot={false}
+              isAnimationActive={true}
+              animationDuration={900}
+              name="Atmospheric Model Fit"
             />
           </AreaChart>
         </ResponsiveContainer>

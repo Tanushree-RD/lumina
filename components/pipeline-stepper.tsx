@@ -13,7 +13,10 @@ interface PipelineStepperProps {
 
 export function PipelineStepper({ onComplete }: PipelineStepperProps) {
   const [stages, setStages] = useState<PipelineStage[]>(() =>
-    PIPELINE_STAGES.map((s) => ({ ...s, status: "pending" as PipelineStageStatus }))
+    PIPELINE_STAGES.map((s, idx) => ({
+      ...s,
+      status: (idx === 0 ? "running" : "pending") as PipelineStageStatus,
+    }))
   );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [stageProgress, setStageProgress] = useState(0);
@@ -40,15 +43,6 @@ export function PipelineStepper({ onComplete }: PipelineStepperProps) {
     setCurrentIndex((prev) => prev + 1);
     setStageProgress(0);
   }, [currentIndex]);
-
-  // Start the first stage
-  useEffect(() => {
-    setStages((prev) => {
-      const next = [...prev];
-      next[0] = { ...next[0], status: "running" };
-      return next;
-    });
-  }, []);
 
   // Animate stage progress
   useEffect(() => {

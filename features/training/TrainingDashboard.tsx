@@ -35,6 +35,7 @@ export function TrainingDashboard() {
     trainingSpeedSamplesPerSec,
     cnnModelAccuracy,
     llmReasoning,
+    rawFlux,
     updateTrainingConfig,
     startTraining,
     appendTrainingMetric,
@@ -53,10 +54,12 @@ export function TrainingDashboard() {
     toast.info("Initializing TensorFlow.js WebGL backend & generating synthetic vectors...");
 
     try {
+      const pointCount = rawFlux?.length || 201;
       const { finalValAccuracy } = await trainExoplanetCNN(
         trainingConfig.sampleCount,
         trainingConfig.epochs,
         trainingConfig.learningRate,
+        pointCount,
         {
           onEpochEnd: (metrics, speed) => {
             setCurrentEpoch(metrics.epoch);
