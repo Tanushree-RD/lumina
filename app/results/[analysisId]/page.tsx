@@ -1,12 +1,9 @@
 "use client";
 
 import React, { use } from "react";
-import Link from "next/link";
 import { useExoplanetStore } from "@/lib/store";
 import { ResultsDashboard } from "@/features/results/ResultsDashboard";
 import { buildCompleteAnalysis, PRESET_CANDIDATES } from "@/lib/mockAnalysis";
-import { Button } from "@/components/ui/button";
-import { Telescope, ArrowLeft } from "lucide-react";
 
 export default function AnalysisDetailPage({
   params,
@@ -36,7 +33,7 @@ export default function AnalysisDetailPage({
   }
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] bg-slate-50/50 py-8">
+    <div className="min-h-[calc(100vh-3.5rem)] bg-[#F8FAFC] py-8">
       <div className="mx-auto max-w-[1200px] px-6">
         <ResultsDashboard analysis={analysis} />
       </div>

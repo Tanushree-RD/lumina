@@ -6,21 +6,12 @@ import { AnalysisResult } from "@/types";
 import { ScoreCards } from "./ScoreCards";
 import { DetectionChart } from "./DetectionChart";
 import { ExplainabilityBars } from "./ExplainabilityBars";
-import { DecisionReasoningCard } from "./DecisionReasoningCard";
-import { GasCardGrid } from "../spectrum/GasCardGrid";
+import { ExplanationCards } from "./ExplanationCards";
+import { DetectionSummaryCard } from "./DetectionSummaryCard";
+import { ScientificReportCards } from "./ScientificReportCards";
 import { generateExoplanetPDF } from "@/lib/pdf-generator";
 import { useExoplanetStore } from "@/lib/store";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  FileDown,
-  RotateCcw,
-  Sparkles,
-  Telescope,
-  CheckCircle2,
-  BookmarkCheck,
-  Compass,
-} from "lucide-react";
+import { FileDown, RotateCcw } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 
@@ -35,10 +26,10 @@ export function ResultsDashboard({ analysis }: ResultsDashboardProps) {
 
   const handleDownloadPDF = async () => {
     setIsGeneratingPdf(true);
-    toast.info("Assembling official NASA-style Exoplanet Validation PDF report...");
+    toast.info("Generating official NASA-standard validation PDF...");
     try {
       await generateExoplanetPDF(analysis);
-      toast.success(`Downloaded Lumina Report for ${analysis.candidate.name}`);
+      toast.success(`Downloaded report for ${analysis.candidate.name}`);
     } catch (err) {
       console.error("PDF generation error:", err);
       toast.error("Failed to generate PDF document.");
@@ -54,65 +45,68 @@ export function ResultsDashboard({ analysis }: ResultsDashboardProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.3 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.25 }}
       className="space-y-8"
     >
-      {/* Header Banner */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 pb-6">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 flex items-center gap-1">
-              <CheckCircle2 className="h-3 w-3" /> Step 4 of 4: Validated
+      {/* 1. Header */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-[#E5E7EB] pb-6">
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#16A34A] bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">
+              <span className="size-1.5 rounded-full bg-[#16A34A]"></span>
+              Mission Status: Validated Candidate
             </span>
-            <span className="text-xs font-mono text-slate-500">
-              MISSION REF: {analysis.id}
+            <span className="text-[12px] font-mono text-[#6B7280]">
+              Mission ID: {analysis.id}
             </span>
           </div>
-          <h1 className="mt-1.5 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
-            {analysis.candidate.name} Detection & Characterization
+
+          <h1 className="text-[30px] font-bold text-[#111827] tracking-tight leading-tight">
+            {analysis.candidate.name}
           </h1>
-          <p className="mt-1 text-xs text-slate-500">
-            Host Star: <span className="font-semibold text-slate-800">{analysis.candidate.hostStar}</span> | Spectral Class: {analysis.candidate.spectralType} | Constellation: {analysis.candidate.constellation}
-          </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
-          <Button
-            variant="outline"
-            size="sm"
+        {/* Action Buttons */}
+        <div className="flex items-center gap-3 shrink-0">
+          <button
+            type="button"
             onClick={handleStartNew}
-            className="h-9 gap-1.5 text-xs border-slate-200"
+            className="bg-white hover:bg-gray-50 text-[#111827] border border-[#E5E7EB] font-medium text-[14px] px-4 py-2 rounded-md transition-colors cursor-pointer inline-flex items-center gap-2"
           >
-            <RotateCcw className="h-3.5 w-3.5" />
-            New Detection
-          </Button>
+            <RotateCcw className="size-3.5 text-[#6B7280]" />
+            <span>New Detection</span>
+          </button>
 
-          <Button
-            size="sm"
+          <button
+            type="button"
             onClick={handleDownloadPDF}
             disabled={isGeneratingPdf}
-            className="h-9 gap-2 text-xs bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+            className="bg-[#2563EB] hover:bg-blue-700 text-white font-medium text-[14px] px-4 py-2 rounded-md transition-colors cursor-pointer inline-flex items-center gap-2 disabled:opacity-50 disabled:pointer-events-none"
           >
-            <FileDown className="h-4 w-4" />
-            <span>{isGeneratingPdf ? "Building PDF..." : "Download NASA PDF Report"}</span>
-          </Button>
+            <FileDown className="size-4" />
+            <span>{isGeneratingPdf ? "Building PDF..." : "Download Report"}</span>
+          </button>
         </div>
       </div>
 
-      {/* 6 Key Score Cards */}
+      {/* 2. KPI Cards (6 Identical White Cards) */}
       <div className="space-y-3">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-          Ensemble Detection Scores
-        </h3>
+        <div className="flex items-baseline justify-between">
+          <h2 className="text-[18px] font-semibold text-[#111827] tracking-tight">
+            Key Metrics
+          </h2>
+          <span className="text-[12px] text-[#6B7280]">
+            Ensemble Detection Confidence
+          </span>
+        </div>
         <ScoreCards scores={analysis.scores} />
       </div>
 
-      {/* Primary Detection Curve and Feature Importance */}
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+      {/* 3. Large Transit Graph (70% left) & Feature Importance (30% right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 items-stretch">
+        <div className="lg:col-span-7">
           <DetectionChart
             points={lightCurvePoints}
             periodDays={analysis.telemetry.orbitalPeriodDays}
@@ -121,7 +115,7 @@ export function ResultsDashboard({ analysis }: ResultsDashboardProps) {
           />
         </div>
 
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-3">
           <ExplainabilityBars
             transitDepthPpm={analysis.telemetry.transitDepthPpm}
             periodDays={analysis.telemetry.orbitalPeriodDays}
@@ -129,45 +123,56 @@ export function ResultsDashboard({ analysis }: ResultsDashboardProps) {
         </div>
       </div>
 
-      {/* Decision Card */}
-      <DecisionReasoningCard
-        conclusion={analysis.decisionConclusion}
-        candidateName={analysis.candidate.name}
+      {/* 4. Explainability */}
+      <ExplanationCards
+        transitDepthPpm={analysis.telemetry.transitDepthPpm}
         periodDays={analysis.telemetry.orbitalPeriodDays}
+        snr={analysis.telemetry.snr}
+        cnnScore={analysis.scores.cnnScore}
+        llmScore={analysis.scores.llmScore}
       />
 
-      {/* Detected Atmospheric Gases */}
-      <div className="space-y-3">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-          Atmospheric Transmission Spectroscopy Results
-        </h3>
-        <GasCardGrid gases={analysis.detectedGases} />
-      </div>
+      {/* 5. Detection Summary */}
+      <DetectionSummaryCard
+        conclusion={analysis.decisionConclusion}
+        candidateName={analysis.candidate.name}
+        telemetry={analysis.telemetry}
+      />
 
-      {/* Scientific Follow-up Recommendations */}
-      <Card className="border-slate-200 bg-white shadow-sm">
-        <CardContent className="p-5 space-y-3">
-          <div className="flex items-center gap-2">
-            <BookmarkCheck className="h-4 w-4 text-blue-600" />
-            <h3 className="text-sm font-semibold text-slate-900">
-              Observational Follow-up Recommendations
-            </h3>
-          </div>
-          <div className="grid gap-2 sm:grid-cols-3">
-            {analysis.recommendations.map((rec, i) => (
-              <div
-                key={i}
-                className="rounded-lg border border-slate-100 bg-slate-50/70 p-3 text-xs text-slate-700 leading-relaxed flex items-start gap-2"
-              >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-[10px] font-bold text-blue-700 font-mono">
-                  {i + 1}
-                </span>
-                <span>{rec}</span>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* 6. Scientific Report (Planet Parameters, Spectroscopy, Model Explanation, Recommendations) */}
+      <ScientificReportCards analysis={analysis} />
+
+      {/* 7. Download PDF */}
+      <div className="rounded-lg border border-[#E5E7EB] bg-white p-6 transition-colors hover:border-gray-300 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h3 className="text-[18px] font-semibold text-[#111827] tracking-tight">
+            Download Scientific Report
+          </h3>
+          <p className="text-[12px] text-[#6B7280] mt-0.5">
+            Export comprehensive peer-reviewed NASA-standard validation PDF dossier with all photometric telemetry and spectroscopic parameters.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3 shrink-0">
+          <button
+            type="button"
+            onClick={handleStartNew}
+            className="bg-white hover:bg-gray-50 text-[#111827] border border-[#E5E7EB] font-medium text-[14px] px-4 py-2 rounded-md transition-colors cursor-pointer"
+          >
+            New Detection
+          </button>
+
+          <button
+            type="button"
+            onClick={handleDownloadPDF}
+            disabled={isGeneratingPdf}
+            className="bg-[#2563EB] hover:bg-blue-700 text-white font-medium text-[14px] px-4 py-2 rounded-md transition-colors cursor-pointer inline-flex items-center gap-2 disabled:opacity-50 disabled:pointer-events-none"
+          >
+            <FileDown className="size-4" />
+            <span>{isGeneratingPdf ? "Building PDF..." : "Download PDF"}</span>
+          </button>
+        </div>
+      </div>
     </motion.div>
   );
 }

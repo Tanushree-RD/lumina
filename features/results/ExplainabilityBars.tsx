@@ -1,9 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Sparkles, Layers } from "lucide-react";
 
 interface ExplainabilityBarsProps {
   transitDepthPpm: number;
@@ -19,89 +17,84 @@ export function ExplainabilityBars({
       name: "Transit Depth",
       importance: 96,
       value: `~${transitDepthPpm.toLocaleString()} ppm`,
-      detail: "Dominant primary U-shape flux depression signature.",
-      color: "bg-blue-600",
+      detail: "Dominant primary U-shape flux depression signature",
     },
     {
       name: "Noise Level",
       importance: 91,
       value: "160 ppm baseline",
-      detail: "High out-of-transit signal quiescence rules out stellar variability.",
-      color: "bg-cyan-600",
+      detail: "Low out-of-transit signal quiescence rules out stellar activity",
     },
     {
-      name: "Transit Symmetry",
+      name: "Symmetry",
       importance: 88,
       value: "98.2% bilateral fit",
-      detail: "Symmetric ingress and egress rules out grazing eclipsing binaries.",
-      color: "bg-emerald-600",
+      detail: "Symmetric ingress/egress rules out grazing eclipsing binaries",
     },
     {
-      name: "Orbital Periodicity",
+      name: "Periodicity",
       importance: 85,
       value: `${periodDays} days`,
-      detail: "Strict periodicity confirmed across 3+ consecutive orbital cycles.",
-      color: "bg-purple-600",
+      detail: "Strict periodicity across consecutive orbital cycles",
     },
     {
-      name: "Estimated Radius Fit",
+      name: "Estimated Radius",
       importance: 79,
       value: "Physical boundary met",
-      detail: "Conforms with Roche lobe limits and stellar density constraints.",
-      color: "bg-amber-600",
+      detail: "Conforms with Roche lobe limits and stellar density",
     },
     {
       name: "Flux Variance",
       importance: 74,
       value: "0.00018 σ",
-      detail: "Low secondary eclipse amplitude confirms substellar companion.",
-      color: "bg-rose-600",
+      detail: "Substellar companion constraint without secondary eclipse",
     },
   ];
 
   return (
-    <Card className="border-slate-200 bg-white shadow-sm">
-      <CardContent className="p-5 space-y-4">
-        <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-          <div className="flex items-center gap-2">
-            <Layers className="h-4 w-4 text-blue-600" />
-            <h3 className="text-sm font-semibold text-slate-900">
-              SHAP & Neural Feature Attribution
-            </h3>
-          </div>
-          <span className="text-xs text-slate-500 font-mono">
-            Integrated Gradients
+    <div className="rounded-lg border border-[#E5E7EB] bg-white p-5 transition-colors hover:border-gray-300 flex flex-col justify-between h-full">
+      <div>
+        <div className="flex items-baseline justify-between border-b border-[#E5E7EB] pb-4 mb-4">
+          <h2 className="text-[18px] font-semibold text-[#111827] tracking-tight">
+            Feature Importance
+          </h2>
+          <span className="text-[12px] font-mono text-[#6B7280]">
+            SHAP Attribution
           </span>
         </div>
 
-        <div className="space-y-3.5">
+        <div className="space-y-4">
           {features.map((item, idx) => (
             <div key={item.name} className="space-y-1.5">
-              <div className="flex items-baseline justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold text-slate-900">{item.name}</span>
-                  <span className="text-[11px] text-slate-400 font-mono">({item.value})</span>
-                </div>
-                <span className="font-mono font-bold text-slate-700">
+              <div className="flex items-center justify-between text-[14px]">
+                <span className="font-medium text-[#111827]">{item.name}</span>
+                <span className="font-mono font-semibold text-[#2563EB]">
                   {item.importance}%
                 </span>
               </div>
 
-              {/* Horizontal Progress Bar */}
-              <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
+              {/* Monochrome Progress Bar - Only Blue Fill */}
+              <div className="h-2 w-full overflow-hidden rounded-full bg-[#F3F4F6]">
                 <motion.div
-                  className={`h-full rounded-full ${item.color}`}
+                  className="h-full rounded-full bg-[#2563EB]"
                   initial={{ width: 0 }}
                   animate={{ width: `${item.importance}%` }}
-                  transition={{ duration: 0.6, delay: idx * 0.05, ease: "easeOut" }}
+                  transition={{ duration: 0.5, delay: idx * 0.04, ease: "easeOut" }}
                 />
               </div>
 
-              <p className="text-[10px] text-slate-500">{item.detail}</p>
+              <div className="flex items-center justify-between text-[12px] text-[#6B7280]">
+                <span className="truncate">{item.detail}</span>
+              </div>
             </div>
           ))}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      <div className="mt-4 pt-3 border-t border-[#E5E7EB] text-[12px] text-[#6B7280] flex justify-between">
+        <span>Integrated Gradients Baseline</span>
+        <span className="font-mono text-[#111827]">6 Parameters</span>
+      </div>
+    </div>
   );
 }

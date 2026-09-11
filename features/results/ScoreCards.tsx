@@ -2,15 +2,6 @@
 
 import React from "react";
 import { DetectionScores } from "@/types";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Sparkles,
-  ShieldCheck,
-  AlertOctagon,
-  Cpu,
-  BrainCircuit,
-  Award,
-} from "lucide-react";
 import { motion } from "framer-motion";
 
 interface ScoreCardsProps {
@@ -22,88 +13,60 @@ export function ScoreCards({ scores }: ScoreCardsProps) {
     {
       label: "Planet Probability",
       value: `${scores.planetProbability}%`,
-      sub: "Bayesian Ephemeris Likelihood",
-      icon: Sparkles,
-      color: "text-emerald-600 bg-emerald-50 border-emerald-200",
-      accent: "from-emerald-500/10 to-transparent",
+      description: "Bayesian likelihood",
+      valueColor: "text-[#2563EB]",
     },
     {
-      label: "Confidence Rating",
+      label: "Confidence",
       value: scores.confidenceLevel,
-      sub: "Multi-Instrument Validation",
-      icon: ShieldCheck,
-      color: "text-blue-600 bg-blue-50 border-blue-200",
-      accent: "from-blue-500/10 to-transparent",
+      description: "Multi-instrument validation",
+      valueColor: scores.confidenceLevel === "High" ? "text-[#16A34A]" : "text-[#2563EB]",
     },
     {
       label: "False Positive Rate",
       value: `${scores.falsePositiveRate}%`,
-      sub: "Eclipsing Binary Probability",
-      icon: AlertOctagon,
-      color: "text-amber-600 bg-amber-50 border-amber-200",
-      accent: "from-amber-500/10 to-transparent",
+      description: "Eclipsing binary probability",
+      valueColor: scores.falsePositiveRate > 5 ? "text-[#DC2626]" : "text-[#111827]",
     },
     {
-      label: "CNN Classifier",
+      label: "CNN Score",
       value: `${scores.cnnScore}%`,
-      sub: "1D-ConvNet Feature Score",
-      icon: Cpu,
-      color: "text-purple-600 bg-purple-50 border-purple-200",
-      accent: "from-purple-500/10 to-transparent",
+      description: "1D-ConvNet classifier",
+      valueColor: "text-[#2563EB]",
     },
     {
       label: "LLM Physics Score",
       value: `${scores.llmScore}%`,
-      sub: "Astro-Physical Consistency",
-      icon: BrainCircuit,
-      color: "text-indigo-600 bg-indigo-50 border-indigo-200",
-      accent: "from-indigo-500/10 to-transparent",
+      description: "Astrophysical consistency",
+      valueColor: "text-[#2563EB]",
     },
     {
       label: "Overall Score",
       value: `${scores.overallScore}%`,
-      sub: "Composite Ensemble Index",
-      icon: Award,
-      color: "text-rose-600 bg-rose-50 border-rose-200",
-      accent: "from-rose-500/10 to-transparent",
+      description: "Composite ensemble index",
+      valueColor: "text-[#2563EB]",
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
       {cards.map((card, idx) => (
         <motion.div
           key={card.label}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25, delay: idx * 0.04 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.25, delay: idx * 0.03 }}
+          className="rounded-lg border border-[#E5E7EB] bg-white p-4 transition-colors hover:border-gray-300"
         >
-          <Card className="relative overflow-hidden border-slate-200 bg-white shadow-sm hover:border-slate-300 transition-all">
-            <div
-              className={`absolute inset-0 bg-gradient-to-b ${card.accent} pointer-events-none`}
-            />
-            <CardContent className="p-4 space-y-2 relative">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-semibold text-slate-500 truncate">
-                  {card.label}
-                </span>
-                <div
-                  className={`flex h-6 w-6 items-center justify-center rounded-md border ${card.color}`}
-                >
-                  <card.icon className="h-3.5 w-3.5" />
-                </div>
-              </div>
-
-              <div>
-                <p className="text-xl font-extrabold tracking-tight text-slate-900 font-mono">
-                  {card.value}
-                </p>
-                <p className="text-[10px] text-slate-400 truncate mt-0.5">
-                  {card.sub}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="text-[12px] font-medium text-[#6B7280] truncate">
+            {card.label}
+          </div>
+          <div className={`mt-1.5 font-mono text-[26px] font-bold tracking-tight leading-none ${card.valueColor}`}>
+            {card.value}
+          </div>
+          <div className="mt-1.5 text-[12px] text-[#6B7280] truncate">
+            {card.description}
+          </div>
         </motion.div>
       ))}
     </div>
