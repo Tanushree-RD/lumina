@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ChevronRight, ArrowRight } from "lucide-react";
 
 export function Hero() {
   return (
@@ -45,20 +46,24 @@ export function Hero() {
               transition={{ duration: 0.35, delay: 0.15 }}
               className="mt-5 flex flex-wrap items-center gap-3"
             >
-              <Button size="lg" className="h-10 px-5">
-                Upload Light Curve
-                <ChevronRight className="ml-1.5 h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="h-10 px-5 text-[var(--muted-foreground)]"
-              >
-                <span className="flex items-center gap-2">
-                  See how it works
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </span>
-              </Button>
+              <Link href="/analyze">
+                <Button size="lg" className="h-10 px-5">
+                  Upload Light Curve
+                  <ChevronRight className="ml-1.5 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link href="/analyze">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="h-10 px-5 text-[var(--muted-foreground)]"
+                >
+                  <span className="flex items-center gap-2">
+                    See how it works
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
+                </Button>
+              </Link>
             </motion.div>
           </div>
 
@@ -69,7 +74,9 @@ export function Hero() {
             className="shrink-0 rounded-lg border border-[var(--border)] bg-white p-4 shadow-sm"
           >
             <div className="mb-3 flex items-center justify-between">
-              <span className="text-xs font-medium text-[var(--muted-foreground)]">Latest detection run</span>
+              <span className="text-xs font-medium text-[var(--muted-foreground)]">
+                Latest detection run
+              </span>
               <span className="text-[10px] text-[var(--muted-foreground)] flex items-center gap-1">
                 <span className="h-1 w-1 rounded-full bg-green-500" />
                 running
@@ -77,7 +84,9 @@ export function Hero() {
             </div>
             <div className="rounded border border-[var(--border)] bg-[var(--secondary)] p-3">
               <div className="mb-2 flex items-baseline justify-between">
-                <span className="text-xs text-[var(--muted-foreground)]">KIC 8462852</span>
+                <span className="text-xs text-[var(--muted-foreground)]">
+                  KIC 8462852
+                </span>
                 <span className="text-sm font-semibold">98.7% confidence</span>
               </div>
               <div className="h-1.5 overflow-hidden rounded-full bg-[var(--secondary)]">

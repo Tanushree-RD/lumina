@@ -1,5 +1,3 @@
-"use client";
-
 import { Telescope } from "lucide-react";
 
 const links = {
@@ -12,16 +10,17 @@ export function Footer() {
   return (
     <footer className="border-t border-[var(--border)] bg-white">
       <div className="mx-auto max-w-[1200px] px-6 py-10">
-        <div className="grid gap-8 sm:grid-cols-2 sm:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div>
             <div className="mb-2 flex items-center gap-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded border border-[var(--primary)]/20 bg-[var(--primary)]/5">
+              <div className="flex h-6 w-6 items-center justify-center rounded border border-primary/20 bg-primary/5">
                 <Telescope className="h-3.5 w-3.5 text-[var(--primary)]" />
               </div>
               <span className="text-sm font-semibold">Lumina</span>
             </div>
             <p className="text-xs text-[var(--muted-foreground)] leading-relaxed">
-              Open-source exoplanet detection with explainable artificial intelligence.
+              Open-source exoplanet detection with explainable artificial
+              intelligence.
             </p>
           </div>
 
@@ -45,7 +44,7 @@ export function Footer() {
         </div>
 
         <div className="mt-6 flex flex-col items-center justify-between gap-2 border-t border-[var(--border)] pt-4 text-[11px] text-[var(--muted-foreground)] sm:flex-row">
-          <span>© 2024 Lumina. Built for open science.</span>
+          <span>© 2025 Lumina. Built for open science.</span>
           <span>
             Data sourced from{" "}
             <a href="#" className="hover:text-[var(--primary)]">

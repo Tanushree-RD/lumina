@@ -43,6 +43,15 @@
   --input: #E5E7EB;
   --ring: #2563EB;
   --radius: 0.375rem;
+  --card: #FFFFFF;
+  --card-foreground: #111827;
+  --accent: #2563EB;
+  --accent-foreground: #FFFFFF;
+  --chart-1: #2563EB;
+  --chart-2: #16A34A;
+  --chart-3: #D97706;
+  --chart-4: #DC2626;
+  --chart-5: #7C3AED;
 }
 
 @layer base {
@@ -81,10 +90,23 @@
   }
 }
 
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
 .animate-fade-in-up {
   animation: fade-in-up 0.35s ease-out forwards;
 }
 
 .animate-fade-in {
   animation: fade-in 0.3s ease-out forwards;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
 }
