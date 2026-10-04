@@ -1,22 +1,48 @@
-#  Lumina
+# Lumina
 
 > Explainable AI for Trustworthy Exoplanet Discovery
 
-Lumina is an AI-assisted exoplanet detection platform developed for the ISRO BAH 2026 Hackathon.
+**Live Demo:** https://lumina-xai.vercel.app/
 
-It analyzes astronomical light curves, detects potential exoplanet transit signals, explains every prediction using Explainable AI, and prioritizes candidates for scientific validation.
+Lumina is an AI-assisted exoplanet detection platform that combines machine learning, explainable AI, and astrophysical validation to identify potential exoplanets from astronomical observations.
+
+The platform analyzes stellar light curves, detects transit signals, estimates atmospheric composition, explains every prediction through Explainable AI (XAI), and prioritizes candidates for scientific validation.
 
 ---
 
 ## Features
 
-- Light Curve CSV Upload
-- AI-based Transit Detection
-- Physics-based Validation
-- Explainable AI
-- Candidate Ranking
-- Interactive Dashboard
-- Scientific Report Generation (WIP)
+### Transit Detection
+- Upload custom light curve CSV files
+- Analyze preset exoplanet candidates
+- Automatic transit signal detection
+- Transit depth and orbital period estimation
+
+### Atmospheric Analysis
+- Generate and analyze transmission spectra
+- Detect atmospheric gases including:
+  - H₂O
+  - CO₂
+  - CH₄
+  - O₃
+  - O₂
+  - N₂O
+  - SO₂
+
+### Explainable AI
+- AI-based exoplanet classification
+- Feature importance visualization
+- Confidence scoring
+- Physics-based validation
+- Transparent prediction reasoning
+
+### Dashboard
+- Candidate summary
+- Detection confidence
+- Atmospheric analysis
+- Candidate ranking
+- Interactive charts
+- Scientific results dashboard
 
 ---
 
@@ -29,36 +55,41 @@ It analyzes astronomical light curves, detects potential exoplanet transit signa
 - Vite
 - Tailwind CSS
 - Framer Motion
+- Recharts
 
-### Backend (WIP)
+### Backend
 
+- FastAPI (planned)
 - Python
-- FastAPI
-- PyTorch
 - NumPy
 - Pandas
+- SciPy
 
-### AI
+### AI / ML
 
-- CNN / Transformer
-- Transit Detection
-- Explainable AI
+- PyTorch
+- CNN-based Transit Detection
+- Explainable AI (XAI)
 - Physics-based Validation
 
 ---
 
 ## Project Structure
 
-```
+```text
 lumina/
 │
 ├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── hooks/
+│   ├── lib/
+│   └── assets/
+│
 ├── public/
-├── components/
-├── pages/
-├── assets/
-├── backend/ (future)
-├── model/ (future)
+├── backend/
+├── models/
+├── datasets/
 └── README.md
 ```
 
@@ -72,7 +103,7 @@ Clone the repository
 git clone https://github.com/Tanushree-RD/lumina.git
 ```
 
-Move into the project
+Navigate to the project
 
 ```bash
 cd lumina
@@ -84,7 +115,7 @@ Install dependencies
 npm install
 ```
 
-Start development server
+Run the development server
 
 ```bash
 npm run dev
@@ -98,56 +129,43 @@ http://localhost:5173
 
 ---
 
-## Git Workflow
+## Live Demo
 
-Never push directly to `main`.
-
-Create your own branch.
-
-```bash
-git checkout -b feature/your-feature-name
-```
-
-Examples
-
-```
-feature/dashboard
-feature/csv-upload
-feature/backend
-feature/explainability
-```
-
-Commit changes
-
-```bash
-git add .
-git commit -m "feat: add explainability section"
-```
-
-Push
-
-```bash
-git push origin feature/your-feature-name
-```
-
-Open a Pull Request.
+https://lumina-xai.vercel.app/
 
 ---
 
 ## Current Progress
 
-- [x] Landing Page
-- [x] Pipeline Section
-- [x] Dashboard UI
-- [x] Explainability UI
-- [x] Candidate Ranking
-- [ ] CSV Upload
-- [ ] Backend Integration
-- [ ] AI Model Connection
-- [ ] Scientific Report
-- [ ] Deployment
+- ✅ Landing Page
+- ✅ Detection Pipeline
+- ✅ Transit Detection UI
+- ✅ Atmospheric Analysis UI
+- ✅ Explainable AI Dashboard
+- ✅ Candidate Ranking
+- ✅ Responsive Design
+- ✅ Vercel Deployment
+- 🚧 PDF Report Export
+- 🚧 Backend Integration
+- 🚧 AI Model Integration
 
 ---
+
+## Future Scope
+
+- Real NASA Exoplanet Archive integration
+- TESS and Kepler dataset support
+- Transformer-based detection models
+- Multi-model ensemble predictions
+- Automated scientific report generation
+- Observatory dashboard
+- Research collaboration support
+
+---
+
+## License
+
+Developed for research, educational purposes, and hackathons.
 
 ## Team
 
